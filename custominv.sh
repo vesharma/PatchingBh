@@ -51,3 +51,4 @@ rm -f invt_apache.txt
 rm -f invt_wls.txt
 rm -f invt_jbs.txt
 rm -f invt_RHL.txt
+rm -f invt_cust.txt
