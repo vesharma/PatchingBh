@@ -10,7 +10,18 @@ systemctl restart docker
  docker run -d -it --name centos1 docker.io/centos
  docker run -d -it --name centos1 docker.io/centos
  
- docker ps -a
+  
+ [root@jbossdomain ansib]# docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED              STATUS                      PORTS               NAMES
+801f268b3ca6        docker.io/centos    "/bin/bash"         27 seconds ago       Up 27 seconds                                   centos3
+16312991c690        docker.io/centos    "/bin/bash"         32 seconds ago       Up 31 seconds                                   centos2
+15d849d16ee3        docker.io/centos    "/bin/bash"         About a minute ago   Exited (1) 47 seconds ago                       centos1
+[root@jbossdomain ansib]#
+[root@jbossdomain ansib]#
+[root@jbossdomain ansib]# docker start 15d849d16ee3
+15d849d16ee3
+
+
  
  docker start centos1 centos2 centos3
    
