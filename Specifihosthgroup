@@ -1,0 +1,42 @@
+[root@jbossdomain ansib]# cat invt24
+[web1]
+192.168.30.28
+[mysql1]
+192.168.30.26
+
+
+T4.yml
+==============================================
+
+---
+  - hosts: all
+    tasks:
+
+    - name: install httpd on web1 group
+      yum:
+         name: httpd
+         state: latest
+      register: yumvar
+      when: inventory_hostname in groups['web1']
+
+    - debug:
+         msg: "yum  {{ yumvar }} "
+
+    - name: install mysql on mysql group
+      yum:
+         name: mysql
+         state: latest
+      register: yummysql
+      when: inventory_hostname in groups['mysql1']
+
+    - debug:
+         msg: " yum mysql is  {{ yummysql }} "
+
+
+=================================
+
+Command that need to run
+
+ansible-playbook t4.yml -i invt24 -u root -k
+
+
