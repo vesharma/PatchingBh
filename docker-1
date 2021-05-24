@@ -24,8 +24,10 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 
  
  docker start centos1 centos2 centos3
-   
-[root@2 ~]# docker inspect --format '{{ .ID }} - {{ .Name }} - {{ .NetworkSettings.IPAddress }}'  57bfa87f7692 c241d8648f81 5589312d231d
-57bfa87f76928e100972dad38478dc26762b71bba7b14977f0752d3b24e9fc60 - /centos3 - 172.17.0.2
-c241d8648f81284c49decad6dd93115d4f7fbc96e25f61311dcb24e3b64dba40 - /centos2 - 172.17.0.3
-5589312d231d6d34ad3dc58ca8baef1103fb71beafa1a916daede1eb13948d18 - /centos1 - 172.17.0.4
+
+
+[root@jbossdomain ansib]#  docker inspect --format '{{ .ID }} - {{ .Name }} - {{ .NetworkSettings.IPAddress }}'  801f268b3ca6 16312991c690 15d849d16ee3
+801f268b3ca637663a02ee6eaae8d426b9320ff11c80b32bd0ae1f56abb81622 - /centos3 - 172.17.0.3
+16312991c6906d61bccf6570a4f6ad2f2d6fbbf4e2dafc23b86ab95cfb85a320 - /centos2 - 172.17.0.2
+15d849d16ee3903130b6b6017b2c28748b37071d124fc1230f0a538791fecc49 - /centos1 - 172.17.0.4
+[root@jbossdomain ansib]#
