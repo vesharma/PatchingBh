@@ -6,9 +6,9 @@ systemctl restart docker
 
  docker pull docker.io/centos
 
- docker run -it --name centos1 docker.io/centos
- docker run -it --name centos1 docker.io/centos
- docker run -it --name centos1 docker.io/centos
+ docker run -d -it --name centos1 docker.io/centos
+ docker run -d -it --name centos1 docker.io/centos
+ docker run -d -it --name centos1 docker.io/centos
  
  docker ps -a
  
