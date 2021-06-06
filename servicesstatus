@@ -1,0 +1,59 @@
+---
+  - hosts: localhost
+    become: true
+    gather_facts: false
+
+    vars:
+      pkgs_list:
+      - httpd
+      - mysql
+      - tomcat
+
+
+    tasks:
+
+    - name: Gather facts services
+      service_facts:
+
+    - name: Gather facts paks
+      package_facts:
+         manager: "auto"
+
+    - name: check by shell command
+      shell: " if  systemctl status httpd.service | grep 'Active:' | awk -F ' ' '{ print $3 }' ;  then echo running;   else echo down ; fi;"
+      register: service_exist
+      ignore_errors: true
+
+    - name: check status
+      debug:
+           msg: "{{ service_exist.stdout }}"
+      loop:
+          '{{ service_exist.stdout | from_yaml_all | list }}'
+
+
+    - name: check for apache
+      shell: "if systemctl status httpd.service | grep 'Active:' | awk -F ' ' '{ print $3 }' ; then echo Apache running ; else echo Apache Down; fi; "
+      register: _svc_apache
+      ignore_errors: true
+      failed_when: >
+          _svc_apache.rc != 0 and ("unrecognized service" not in _svc_apache.stderr)
+          and 'Could not find the requested service' not in _svc_apache.msg
+
+    - debug:
+            msg: "{{ _svc_apache.stdout }}"
+      when: "_svc_apache.rc == 0 and 'running' in  _svc_apache.stdout and  'httpd.service' in ansible_facts.services"
+      ignore_errors: true
+
+
+    - name: assert apache services
+      assert:
+         that:
+            - "'{{ ansible_facts.services['httpd.service'].state }}' == 'running'"
+         fail_msg: " Apache service is down"
+         success_msg: "Apache services is up"
+      register: result
+      changed_when:
+        - result.evaluated_to is defined
+        - result.evaluated_to == False
+      failed_when: False
+
